@@ -4,4 +4,11 @@
     <string name="hello_blank_fragment">Fragment Detail</string>
     <string name="selector_fragment_title">Selector Fragment Title</string>
 
+    <string-array name="generos">
+        <item>Acción</item>
+        <item>Romaticas</item>
+        <item>Terror</item>
+        <item>Ciencia ficción</item>
+    </string-array>
+
 </resources>

@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         if(findViewById(R.id.contenedor_pequeno) != null
            ){
             getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
                     .add(R.id.contenedor_pequeno,
                             SelectorFragment.class, null)
             .commit();
