@@ -3,6 +3,8 @@ package net.ivanvega.soportediferentespantallasb;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ public class SelectorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private RecyclerView recyclerViewLibros;
 
     public SelectorFragment() {
         // Required empty public constructor
@@ -68,6 +71,19 @@ public class SelectorFragment extends Fragment {
                 layout.findViewById(R.id.lblFrag);
 
         label.setText("Esto es un fragmento con comportameinto");
+
+
+        recyclerViewLibros = layout.findViewById(R.id.recyclerView);
+
+        MiAdaptadorPersonaliza miAdaptadorPersonaliza
+                = new MiAdaptadorPersonaliza(Libro.ejemplosLibros());
+
+        recyclerViewLibros.setAdapter(miAdaptadorPersonaliza);
+
+        RecyclerView.LayoutManager layoutManager
+                 = new GridLayoutManager(getActivity(), 2);
+
+        recyclerViewLibros.setLayoutManager(layoutManager);
 
         return layout;
 
