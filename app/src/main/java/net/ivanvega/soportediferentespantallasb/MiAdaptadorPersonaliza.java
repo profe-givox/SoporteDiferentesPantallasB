@@ -15,6 +15,11 @@ import java.util.Vector;
 public class MiAdaptadorPersonaliza extends
         Adapter<MiAdaptadorPersonaliza.ViewHolder>{
     private Vector<Libro> libros;
+    private View.OnClickListener onClickItemListener;
+
+    public void setOnClickItemListener (View.OnClickListener onClickListener){
+        this.onClickItemListener = onClickListener;
+    }
 
     public MiAdaptadorPersonaliza(Vector<Libro> libros){
         this.libros = libros;
@@ -27,6 +32,8 @@ public class MiAdaptadorPersonaliza extends
         View v =   LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_selector_layout, parent,
                         false);
+
+        v.setOnClickListener(this.onClickItemListener);
 
         return new ViewHolder(v);
     }

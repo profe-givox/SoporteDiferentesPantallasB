@@ -1,7 +1,9 @@
 package net.ivanvega.soportediferentespantallasb;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +30,7 @@ public class SelectorFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private RecyclerView recyclerViewLibros;
+    private MainActivity activity;
 
     public SelectorFragment() {
         // Required empty public constructor
@@ -60,6 +64,14 @@ public class SelectorFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity){
+           this.activity = (MainActivity)context;
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -77,6 +89,17 @@ public class SelectorFragment extends Fragment {
 
         MiAdaptadorPersonaliza miAdaptadorPersonaliza
                 = new MiAdaptadorPersonaliza(Libro.ejemplosLibros());
+
+        miAdaptadorPersonaliza.setOnClickItemListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int posLibroSelectd = recyclerViewLibros.getChildAdapterPosition(view);
+                Toast.makeText(getActivity(),"item selected: "+ posLibroSelectd  ,
+                        Toast.LENGTH_LONG).show();
+                SelectorFragment.this.activity.mostrarDetalle(posLibroSelectd);
+
+            }
+        });
 
         recyclerViewLibros.setAdapter(miAdaptadorPersonaliza);
 

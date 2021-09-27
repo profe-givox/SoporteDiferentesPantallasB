@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,10 +24,15 @@ public class DetalleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final String ARG_LIBRO_POS = "posLibro";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView txtTitulo;
+    private TextView txtAutor;
+    private ImageView imvPortada;
 
     public DetalleFragment() {
         // Required empty public constructor
@@ -81,6 +88,35 @@ public class DetalleFragment extends Fragment {
         spinner.setAdapter(adapter);
 
 
+        Bundle  params =  getArguments();
+
+        if(params!=null){
+            int pos =
+                    params.getInt(DetalleFragment.ARG_LIBRO_POS);
+            setInfoLibro(pos, layout);
+        }else{
+            setInfoLibro(0, layout);
+        }
+
+
+
         return layout;
+    }
+
+    private void setInfoLibro(int pos, View layout) {
+        Libro libro = Libro.ejemplosLibros().elementAt(pos);
+
+        txtTitulo = (TextView) layout.findViewById(R.id.titulo);
+        txtAutor = (TextView) layout.findViewById(R.id.autor);
+        imvPortada = (ImageView)layout.findViewById(R.id.portada);
+
+        txtTitulo.setText(libro.getTitulo());
+        txtAutor.setText(libro.getAutor());
+        imvPortada.setImageResource(libro.getRecursoImagen());
+
+    }
+
+    public void setInfoLibro(int posLibroSelectd) {
+        this.setInfoLibro(posLibroSelectd, getView());
     }
 }

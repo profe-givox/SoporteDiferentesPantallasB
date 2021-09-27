@@ -24,4 +24,31 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void mostrarDetalle(int posLibroSelectd) {
+        DetalleFragment detalleFragment;
+
+        detalleFragment =(DetalleFragment)
+                getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+        if (detalleFragment!=null){
+            detalleFragment.setInfoLibro(posLibroSelectd)   ;
+        }else{
+
+            detalleFragment = new DetalleFragment();
+
+            Bundle param = new Bundle();
+            param.putInt(DetalleFragment.ARG_LIBRO_POS, posLibroSelectd );
+
+            detalleFragment.setArguments(param);
+
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.contenedor_pequeno, detalleFragment, null )
+                    .addToBackStack(null)
+                    .commit();
+
+        }
+
+    }
 }
