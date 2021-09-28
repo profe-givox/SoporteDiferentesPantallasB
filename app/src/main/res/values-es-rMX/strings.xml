@@ -4,4 +4,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Fragmento Detalle</string>
     <string name="selector_fragment_title">Titulo fragmento selector</string>
+
+    <string-array name="generos">
+        <item>Acción</item>
+        <item>Romanyocas</item>
+        <item>Terror</item>
+        <item>Ciencia ficcion</item>
+    </string-array>
 </resources>

@@ -16,9 +16,14 @@ public class MiAdaptadorPersonaliza extends
         Adapter<MiAdaptadorPersonaliza.ViewHolder>{
     private Vector<Libro> libros;
     private View.OnClickListener onClickItemListener;
+    private View.OnLongClickListener onLongClickItenListener;
 
     public void setOnClickItemListener (View.OnClickListener onClickListener){
         this.onClickItemListener = onClickListener;
+    }
+
+    public  void setOnLongClickItemListener (View.OnLongClickListener onLongClickItemListener){
+        this.onLongClickItenListener = onLongClickItemListener;
     }
 
     public MiAdaptadorPersonaliza(Vector<Libro> libros){
@@ -34,6 +39,7 @@ public class MiAdaptadorPersonaliza extends
                         false);
 
         v.setOnClickListener(this.onClickItemListener);
+        v.setOnLongClickListener(this.onLongClickItenListener);
 
         return new ViewHolder(v);
     }

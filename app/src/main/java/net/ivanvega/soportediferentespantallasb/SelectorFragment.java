@@ -101,6 +101,18 @@ public class SelectorFragment extends Fragment {
             }
         });
 
+        miAdaptadorPersonaliza.setOnLongClickItemListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                Toast.makeText(activity,
+                        "Esto fue un presionado largo",
+                        Toast.LENGTH_LONG).show();
+
+                return false;
+            }
+        });
+
         recyclerViewLibros.setAdapter(miAdaptadorPersonaliza);
 
         RecyclerView.LayoutManager layoutManager

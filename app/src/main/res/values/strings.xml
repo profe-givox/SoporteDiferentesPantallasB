@@ -5,10 +5,10 @@
     <string name="selector_fragment_title">Selector Fragment Title</string>
 
     <string-array name="generos">
-        <item>Acción</item>
-        <item>Romaticas</item>
-        <item>Terror</item>
-        <item>Ciencia ficción</item>
+        <item>Action</item>
+        <item>Romances</item>
+        <item>Horror</item>
+        <item>Fiction</item>
     </string-array>
 
 </resources>

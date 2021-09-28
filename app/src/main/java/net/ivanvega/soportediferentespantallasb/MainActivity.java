@@ -11,7 +11,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(findViewById(R.id.contenedor_pequeno) != null
+        if(findViewById(R.id.contenedor_pequeno) != null &&
+                getSupportFragmentManager().findFragmentById(R.id.contenedor_pequeno) ==null
            ){
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
@@ -47,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.contenedor_pequeno, detalleFragment, null )
                     .addToBackStack(null)
                     .commit();
-
         }
-
     }
 }
