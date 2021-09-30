@@ -11,4 +11,10 @@
         <item>Terror</item>
         <item>Ciencia ficcion</item>
     </string-array>
+
+    <string-array name="mnuContextualSelector">
+        <item>Compartir</item>
+        <item>Agregar</item>
+        <item>Eliminar</item>
+    </string-array>
 </resources>

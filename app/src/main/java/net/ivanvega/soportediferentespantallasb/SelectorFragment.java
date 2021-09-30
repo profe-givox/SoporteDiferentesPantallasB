@@ -1,9 +1,12 @@
 package net.ivanvega.soportediferentespantallasb;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,7 +71,7 @@ public class SelectorFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof MainActivity){
            this.activity = (MainActivity)context;
-        }
+        }   
     }
 
     @Override
@@ -105,9 +108,67 @@ public class SelectorFragment extends Fragment {
             @Override
             public boolean onLongClick(View view) {
 
-                Toast.makeText(activity,
-                        "Esto fue un presionado largo",
-                        Toast.LENGTH_LONG).show();
+
+
+                int posLibro = recyclerViewLibros.getChildAdapterPosition(view);
+
+                Libro libroSelec = Libro.ejemplosLibros().get(posLibro);
+
+                String[] mnuContxtSelec =
+                        getResources().getStringArray(R.array.mnuContextualSelector);
+
+                AlertDialog.Builder dialog =
+                        new AlertDialog.Builder(activity);
+
+                dialog.setItems(mnuContxtSelec, new DialogInterface.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Toast.makeText(activity,
+                                "Elemento presionado " + i,
+                                Toast.LENGTH_LONG).show();
+
+                        switch (i){
+                            case 0:
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, libroSelec.getTitulo() );
+                                intent.putExtra(Intent.EXTRA_TEXT, libroSelec.getUrl());
+                                startActivity(intent);
+
+                                break;
+                            case 1:
+                                Libro.ejemplosLibros().add(libroSelec);
+                                miAdaptadorPersonaliza.notifyDataSetChanged();
+
+
+                                break;
+                            case 2:
+                                Libro.ejemplosLibros().remove(posLibro);
+                                miAdaptadorPersonaliza.notifyDataSetChanged();
+                                break;
+
+                        }
+                    }
+                });
+
+
+                /*
+                dialog.setTitle("Titulo cuadro dialogo");
+                dialog.setMessage("Este es un cuadro de dialogo informativo");
+                dialog.setPositiveButton("Ok" ,
+                        (dialogInterface, i) ->
+                        { Toast.makeText(activity,""+i,
+                                Toast.LENGTH_LONG).show();
+                        } );
+
+                 */
+
+                dialog.create().show();
+
+
 
                 return false;
             }
