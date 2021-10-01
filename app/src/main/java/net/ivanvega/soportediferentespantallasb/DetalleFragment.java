@@ -1,24 +1,36 @@
 package net.ivanvega.soportediferentespantallasb;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.telephony.mbms.StreamingServiceInfo;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DetalleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetalleFragment extends Fragment {
+public class DetalleFragment extends Fragment
+        implements MediaPlayer.OnPreparedListener,
+            MediaController.MediaPlayerControl,
+        View.OnTouchListener
+{
+    MediaPlayer mediaPlayer;
+    MediaController mediaController;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -114,9 +126,98 @@ public class DetalleFragment extends Fragment {
         txtAutor.setText(libro.getAutor());
         imvPortada.setImageResource(libro.getRecursoImagen());
 
+        if ( mediaPlayer==null ){
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnPreparedListener(this);
+
+            try {
+                mediaPlayer.setDataSource(getActivity(), Uri.parse(libro.getUrl()));
+                mediaPlayer.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            mediaPlayer.release();
+        }
+
     }
 
     public void setInfoLibro(int posLibroSelectd) {
         this.setInfoLibro(posLibroSelectd, getView());
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mediaPlayer) {
+
+        mediaController = new MediaController(getActivity());
+        mediaController.setMediaPlayer(this);
+        mediaController.setAnchorView(
+                getView().findViewById(R.id.detalle_fragment_layout_root)
+        );
+        mediaController.show();
+        mediaPlayer.start();
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return 0;
+    }
+
+    @Override
+    public void seekTo(int i) {
+
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return false;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return false;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        return false;
     }
 }

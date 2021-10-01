@@ -140,14 +140,18 @@ public class SelectorFragment extends Fragment {
 
                                 break;
                             case 1:
-                                Libro.ejemplosLibros().add(libroSelec);
-                                miAdaptadorPersonaliza.notifyDataSetChanged();
+                                Libro.ejemplosLibros().add(
+                                        libroSelec);
+                                miAdaptadorPersonaliza
+                                        .notifyItemInserted
+                                                (Libro.ejemplosLibros().size()-1);
 
 
                                 break;
                             case 2:
                                 Libro.ejemplosLibros().remove(posLibro);
-                                miAdaptadorPersonaliza.notifyDataSetChanged();
+                                miAdaptadorPersonaliza.notifyItemRemoved(posLibro);
+
                                 break;
 
                         }
@@ -170,7 +174,7 @@ public class SelectorFragment extends Fragment {
 
 
 
-                return false;
+                return true;
             }
         });
 
