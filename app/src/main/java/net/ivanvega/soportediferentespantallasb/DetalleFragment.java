@@ -85,6 +85,7 @@ public class DetalleFragment extends Fragment
         View layout = inflater.inflate(R.layout.detalle_fragment_layout,
                 container, false);
 
+        layout.setOnTouchListener(this);
         Spinner spinner = layout.findViewById(R.id.spnGeneros);
 
         String[] arrGeneros =
@@ -109,9 +110,6 @@ public class DetalleFragment extends Fragment
         }else{
             setInfoLibro(0, layout);
         }
-
-
-
         return layout;
     }
 
@@ -126,7 +124,11 @@ public class DetalleFragment extends Fragment
         txtAutor.setText(libro.getAutor());
         imvPortada.setImageResource(libro.getRecursoImagen());
 
-        if ( mediaPlayer==null ){
+
+
+        if ( mediaPlayer!=null ){
+            mediaPlayer.release();
+        }
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setOnPreparedListener(this);
 
@@ -137,9 +139,7 @@ public class DetalleFragment extends Fragment
                 e.printStackTrace();
             }
 
-        }else{
-            mediaPlayer.release();
-        }
+
 
     }
 
@@ -162,52 +162,55 @@ public class DetalleFragment extends Fragment
 
     @Override
     public void start() {
-
+        mediaPlayer.start();
     }
 
     @Override
     public void pause() {
-
+        mediaPlayer.pause();
     }
 
     @Override
     public int getDuration() {
-        return 0;
+
+        return mediaPlayer.getDuration();
     }
 
     @Override
     public int getCurrentPosition() {
-        return 0;
+
+        return mediaPlayer.getCurrentPosition();
     }
 
     @Override
     public void seekTo(int i) {
-
+        mediaPlayer.seekTo(i);
     }
 
     @Override
     public boolean isPlaying() {
-        return false;
+        return mediaPlayer.isPlaying();
     }
 
     @Override
     public int getBufferPercentage() {
-        return 0;
+
+        return (getCurrentPosition()/getDuration())*100;
     }
 
     @Override
     public boolean canPause() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canSeekBackward() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean canSeekForward() {
-        return false;
+        return true;
     }
 
     @Override
@@ -217,7 +220,19 @@ public class DetalleFragment extends Fragment
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-
+        if(mediaController!=null){
+            mediaController.show();
+        }
         return false;
+    }
+
+    @Override
+    public void onStop() {
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
+        super.onStop();
     }
 }
