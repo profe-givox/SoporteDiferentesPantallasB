@@ -1,8 +1,11 @@
 package net.ivanvega.soportediferentespantallasb;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,5 +52,30 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         }
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if( item.getItemId() == R.id.menu_preferencias){
+            //Menu para preferencias
+            return true;
+        }else if (item.getItemId() == R.id.menu_ultimo){
+            irUltimoVisitado();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void irUltimoVisitado() {
+
     }
 }
